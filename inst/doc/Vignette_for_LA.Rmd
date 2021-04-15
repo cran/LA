@@ -1,0 +1,117 @@
+---
+title: "Vignette for Package LA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette for Package LA}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette gives a high level overview on how to use the R package LA to find different types of optimal designs. 
+
+\
+
+Load the library first.
+```{r}
+devtools::load_all()
+library(LA)
+```
+
+
+We start with order-of-addition designs (OofAs). Suppose we want to generate a full OofA with 4 factors. We can use the following code:
+
+```{r}
+toy=rOofA(k=4);toy
+```
+
+Sometimes, practitioners may not need full OofAs. If they want to generate a 12-run random OofA with 4 factors. The following code can be used:
+
+```{r}
+toy=rOofA(n=12,k=4);toy
+```
+
+Function "rOofA" is a fundamental support for main function "LA_OofA". If we want to generate a D-optimal 12-run OofA with 4 factors. The following code can be used:
+
+```{r}
+try.OofA=LA_OofA(n=12,k=4);try.OofA
+```
+
+
+Next, we introduce "LA_LHD" for identifying optimal Latin hypercube designs (LHDs). To generate a 6 by 3 maximin distance LHD, the following code can be used:
+
+```{r}
+try.LHD1=LA_LHD(n=6,k=3);try.LHD1
+```
+
+To generate a 9 by 4 nearly orthogonal LHD, the following code can be used:
+```{r}
+try.LHD2=LA_LHD(n=9,k=4,OC="AvgAbsCor");try.LHD2
+```
+
+To generate a 12 by 5 maximum projection LHD, the following code can be used:
+```{r}
+try.LHD2=LA_LHD(n=12,k=5,OC="MaxProCriterion");try.LHD2
+```
+
+Last, we introduce "LA_opt" for experimental designs with continuous input and function optimization. For function optimization, we have two examples here. Now define an objective function: Sum of Different Powers.
+
+$$f(x)=\sum_{i=1}^{d}|x_{i}|^{i+1}$$, where $d$ is the dimension.
+
+```{r}
+SDP=function(x){i=1:length(x);y=sum(abs(x)^(i=1));return(y)}
+```
+
+Use LA to find the optimal solution under 20-dimensional setting for SDP function with 10 iterations:
+
+```{r}
+try=LA_opt(of=SDP,lb=rep(-1,20),ub=rep(1,20),N=10,type="mini")
+SDP(try)  #Note that the true global optimum is 0, but we only have 10 iterations here
+```
+
+Another example is the Cross-in-Tray function:
+
+$$f(x)=-0.0001(|sin(x_{1})sin(x_{2})exp\{|100-\frac{\sqrt{x_{1}^2+x_{2}^2}}{\pi} | \}|+1)^{0.1}$$.
+
+```{r}
+CiT=function(x){x1=x[1];x2=x[2];y=-0.0001*(abs(sin(x1)*sin(x2)*exp(abs(100-sqrt(x1^2+x2^2)/pi)))+1)^0.1;return(y)}
+```
+
+Use LA to find the optimal solution under 2-dimensional setting for CiT function with 10 iterations:
+
+```{r}
+try2=LA_opt(of=CiT,lb=rep(-10,2),ub=rep(10,2),N=10,type="mini")
+CiT(try2) #Note that the true global optimum is -2.06261, but we only have 10 iterations
+```
+
+
+For the optimal design part, we consider the following illustrative example:
+
+A health scientist is designing an experiment to discover the relationship between cooking gas and lung function. The experiment is to be performed on rats. The response variable is maximum lung volume, and the predictor variable is time per day (in hours) exposed to a given level of cooking gas in the atmosphere. There are 20 rats available for the experiment. Assume a simple linear regression model.
+
+Here we want to find a D-optimal 20-run design, where the input variable takes values between 0 and 24. In theory, we know the optimal design is the following:
+
+```{r}
+matrix(c(rep(1,20),rep(0,10),rep(24,10)),ncol=2,nrow=20,byrow=FALSE)
+```
+
+So Let's see if LA is able to identify that. Now define the D-optimality criterion in simple linear regression model:
+
+```{r}
+D=function(x){IM=t(x)%*%x;return(det(IM))}
+```
+
+Use LA to find the optimal solution for above problem, and we want to maximize the determinant of the information matrix.
+
+```{r}
+try3=LA_opt(n=20,lb=c(1,0),ub=c(1,24),N=10,OC=D,type="maxi")
+try3 #with more iterations, LA would return even better result.
+```
