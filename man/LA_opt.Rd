@@ -9,6 +9,7 @@ LA_opt(
   n = NULL,
   lb,
   ub,
+  m = 10,
   N = 10,
   OC = NULL,
   type = "mini",
@@ -23,6 +24,8 @@ LA_opt(
 \item{lb}{A vector contains the lower bounds of all the input variables. For example, if there are 3 input variables whose lower bounds are 0, 5, and 15, \code{lb} should be \code{lb=c(0,5,15)}.}
 
 \item{ub}{A vector contains the upper bounds of all the input variables. For example, if there are 3 input variables whose upper bounds are 10, 15, and 25, \code{ub} should be \code{lb=c(10,15,25)}.}
+
+\item{m}{A positive integer, which stands for the number of starting lionesses agents. The default is set to be 10, and it is recommended to be no greater than 100.}
 
 \item{N}{A positive integer, which stands for the number of iterations. The default is set to be 10. A large value of \code{N} will result a high CPU time, and it is recommended to be no greater than 500.}
 
@@ -45,7 +48,7 @@ SDP=function(x){i=1:length(x);y=sum(abs(x)^(i=1));return(y)}
 
 #Use LA to find the optimal solution under 20-dimensional setting
 #for SDP function with 10 iterations.
-try=LA_opt(of=SDP,lb=rep(-1,20),ub=rep(1,20),N=10,type="mini")
+try=LA_opt(of=SDP,lb=rep(-1,20),ub=rep(1,20),m=10,N=10,type="mini")
 SDP(try)  #Note that the true global optimum is 0, but we only have 10 iterations
 
 #Another example
@@ -55,7 +58,7 @@ exp(abs(100-sqrt(x1^2+x2^2)/pi)))+1)^0.1;return(y)}
 
 #Use LA to find the optimal solution under 2-dimensional setting
 #for CiT function with 10 iterations.
-try2=LA_opt(of=CiT,lb=rep(-10,2),ub=rep(10,2),N=10,type="mini")
+try2=LA_opt(of=CiT,lb=rep(-10,2),ub=rep(10,2),m=10,N=10,type="mini")
 CiT(try2) #Note that the true global optimum is -2.06261, but we only have 10 iterations
 
 #Next we introduce the optimal design part
@@ -70,6 +73,6 @@ D=function(x){IM=t(x)\%*\%x;return(det(IM))}
 
 #Use LA to find the optimal solution for above problem.
 #We want to maximize the determinant of the information matrix.
-try3=LA_opt(n=20,lb=c(1,0),ub=c(1,24),N=10,OC=D,type="maxi")
+try3=LA_opt(n=20,lb=c(1,0),ub=c(1,24),m=10,N=10,OC=D,type="maxi")
 try3 #with more iterations, LA would return even better result.
 }

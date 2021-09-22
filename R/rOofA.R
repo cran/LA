@@ -27,9 +27,9 @@ rOofA=function(n=factorial(k),k){
     return(k)
   }
 
-  else{
+  else if(2<=k&&k<=8){
 
-    X = NULL
+    X=NULL
 
     for(i in 1:k){
 
@@ -58,6 +58,46 @@ rOofA=function(n=factorial(k),k){
     }
 
     return(X)
+  }
+
+  else {
+
+    if(n==factorial(k)){
+
+      X=NULL
+
+      for(i in 1:k){
+
+        X=rbind(X,cbind(i,(rOofA(k=(k-1))+i)))
+
+      }
+
+      for (i in 1:nrow(X)) {
+        for (j in 1:ncol(X)) {
+
+          if(X[i,j]>k){
+            X[i,j]=X[i,j]%%k
+          }
+
+        }
+      }
+
+      colnames(X)=NULL
+
+      return(X)
+    }
+
+    if(n<factorial(k)){
+
+      X=NULL
+
+      for (i in 1:n) {
+        X=rbind(X,sample(x=seq(1,k),k,replace=F))
+      }
+
+      return(X)
+    }
+
   }
 
 }
