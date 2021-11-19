@@ -13,6 +13,7 @@ LA_opt(
   N = 10,
   OC = NULL,
   type = "mini",
+  alpha = 0.1,
   maxtime = 5
 )
 }
@@ -33,10 +34,12 @@ LA_opt(
 
 \item{type}{A logic input argument, which indicates the type of optimization. If \code{type} is \code{mini} (the default setting), minimization will be implemented in the algorithm. If \code{type} is \code{maxi},  maximization will be implemented in the algorithm.}
 
+\item{alpha}{A tuning parameter in algorithm for controlling how big the change would be when updating elements in the step of avoiding local optimum. The default is set to be 0.1, which is the recommended value.}
+
 \item{maxtime}{A positive number, which indicates the expected maximum CPU time given by user, and it is measured by minutes. For example, maxtime=3.5 indicates the CPU time will be no greater than three and half minutes. The default is set to be 5.}
 }
 \value{
-If all inputs are logical, then the output will be either a \code{n} by \code{length(lb)} optimal design or a 1 by \code{length(lb)} vector of optimal solutions for function optimization.
+If all inputs are logical, then the output will be either a \code{n} by \code{length(lb)} optimal design or a 1 by \code{length(lb)} vector of optimal solutions for function optimization. Here, the \code{length(lb)} is assumed to be at least 2 for either case.
 }
 \description{
 \code{LA_opt} returns optimal designs with continuous input or optimal solutions for function optimization

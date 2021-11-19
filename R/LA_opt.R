@@ -10,9 +10,10 @@
 #' @param N A positive integer, which stands for the number of iterations. The default is set to be 10. A large value of \code{N} will result a high CPU time, and it is recommended to be no greater than 500.
 #' @param OC An optimality criterion. If user is seeking for optimal design, \code{OC} should be an optimality criterion for how to evaluate the design matrix. If user is seeking for function optimization, \code{OC} should be left with \code{NULL}, which is the default setting.
 #' @param type A logic input argument, which indicates the type of optimization. If \code{type} is \code{mini} (the default setting), minimization will be implemented in the algorithm. If \code{type} is \code{maxi},  maximization will be implemented in the algorithm.
+#' @param alpha A tuning parameter in algorithm for controlling how big the change would be when updating elements in the step of avoiding local optimum. The default is set to be 0.1, which is the recommended value.
 #' @param maxtime A positive number, which indicates the expected maximum CPU time given by user, and it is measured by minutes. For example, maxtime=3.5 indicates the CPU time will be no greater than three and half minutes. The default is set to be 5.
 #'
-#' @return If all inputs are logical, then the output will be either a \code{n} by \code{length(lb)} optimal design or a 1 by \code{length(lb)} vector of optimal solutions for function optimization.
+#' @return If all inputs are logical, then the output will be either a \code{n} by \code{length(lb)} optimal design or a 1 by \code{length(lb)} vector of optimal solutions for function optimization. Here, the \code{length(lb)} is assumed to be at least 2 for either case.
 #'
 #' @examples
 #' #We start with function optimization
@@ -50,7 +51,7 @@
 #' try3 #with more iterations, LA would return even better result.
 #' @export
 
-LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
+LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",alpha=0.1,maxtime=5){
 
   if(length(lb)!=length(ub)){
     stop("The number of lower bounds is not equal to the number of upper bounds, please check.")
@@ -65,6 +66,10 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
     C=1  #Initialize counter index
 
     k=length(lb)    #count how many input variables
+
+    if(k<=1){
+      stop("The number of input variables needs to be at least two.")
+    }
 
     #step 1 starts
     S=array(0,dim=c(n,k,m))        #solution matrix
@@ -169,7 +174,7 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
 
               if (z<=((N-C+1)/N)){
 
-                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*0.1*S[i,j,l]
+                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*alpha*S[i,j,l]
 
               }
 
@@ -297,7 +302,7 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
 
               if (z<=((N-C+1)/N)){
 
-                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*0.1*S[i,j,l]
+                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*alpha*S[i,j,l]
 
               }
 
@@ -344,6 +349,10 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
       stop("Design run size, n, needs to be specified.")
     }
 
+    if(n<=1){
+      stop("Design run size, n, needs to be at least two.")
+    }
+
     if(is.null(OC)==TRUE){
       stop("An optimality criterion, OC, needs to be specified.")
     }
@@ -351,6 +360,10 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
     C=1  #Initialize counter index
 
     k=length(lb)    #count how many input variables
+
+    if(k<=1){
+      stop("The number of input variables needs to be at least two.")
+    }
 
     #step 1 starts
     S=array(0,dim=c(n,k,m))        #solution matrix
@@ -408,11 +421,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=centre
-          S[,j,index]=LW[j]
+          S[,j,index]=LW[,j]
           index=index+1
 
           S[,,index]=centre
-          S[,j,index]=RW[j]
+          S[,j,index]=RW[,j]
           index=index+1
 
         }
@@ -422,11 +435,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=LW
-          S[,j,index]=centre[j]
+          S[,j,index]=centre[,j]
           index=index+1
 
           S[,,index]=LW
-          S[,j,index]=RW[j]
+          S[,j,index]=RW[,j]
           index=index+1
 
         }
@@ -436,11 +449,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=RW
-          S[,j,index]=centre[j]
+          S[,j,index]=centre[,j]
           index=index+1
 
           S[,,index]=RW
-          S[,j,index]=LW[j]
+          S[,j,index]=LW[,j]
           index=index+1
 
         }
@@ -455,7 +468,7 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
 
               if (z<=((N-C+1)/N)){
 
-                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*0.1*S[i,j,l]
+                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*alpha*S[i,j,l]
 
               }
 
@@ -536,11 +549,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=centre
-          S[,j,index]=LW[j]
+          S[,j,index]=LW[,j]
           index=index+1
 
           S[,,index]=centre
-          S[,j,index]=RW[j]
+          S[,j,index]=RW[,j]
           index=index+1
 
         }
@@ -550,11 +563,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=LW
-          S[,j,index]=centre[j]
+          S[,j,index]=centre[,j]
           index=index+1
 
           S[,,index]=LW
-          S[,j,index]=RW[j]
+          S[,j,index]=RW[,j]
           index=index+1
 
         }
@@ -564,11 +577,11 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
         for (j in 1:k) {
 
           S[,,index]=RW
-          S[,j,index]=centre[j]
+          S[,j,index]=centre[,j]
           index=index+1
 
           S[,,index]=RW
-          S[,j,index]=LW[j]
+          S[,j,index]=LW[,j]
           index=index+1
 
         }
@@ -583,7 +596,7 @@ LA_opt=function(of=NULL,n=NULL,lb,ub,m=10,N=10,OC=NULL,type="mini",maxtime=5){
 
               if (z<=((N-C+1)/N)){
 
-                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*0.1*S[i,j,l]
+                S[i,j,l]=S[i,j,l]+sample(c(-1,1),1,prob=c(0.5,0.5))*alpha*S[i,j,l]
 
               }
 
