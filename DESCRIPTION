@@ -1,7 +1,7 @@
 Package: LA
 Type: Package
 Title: Lioness Algorithm (LA)
-Version: 2.0
+Version: 2.1
 Date: 2022-05-06
 Authors@R: c(
     person("Hongzhi", "Wang", email="hw34508@uga.edu", role=c("aut","cre")),
@@ -15,10 +15,10 @@ Imports: Rcpp
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-05-07 01:29:16 UTC; wangh
+Packaged: 2022-05-07 11:48:55 UTC; wangh
 Author: Hongzhi Wang [aut, cre],
   Qian Xiao [aut],
   Abhyuday Mandal [aut]
 Maintainer: Hongzhi Wang <hw34508@uga.edu>
 Repository: CRAN
-Date/Publication: 2022-05-07 06:40:06 UTC
+Date/Publication: 2022-05-11 15:30:07 UTC

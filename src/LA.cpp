@@ -210,7 +210,7 @@ arma::mat LA_LHDC(int n, int k, int m=100, int N=5000,
   
   for (int i=0;i<m;i++){
     
-    X.slice(i)=rLHDC(n=n,k=k);
+    X.slice(i)=rLHDC(n,k);
     
   }
   
@@ -236,7 +236,7 @@ arma::mat LA_LHDC(int n, int k, int m=100, int N=5000,
     
     for (int i=0;i<m;i++){
       
-      result(i,0)=phi_pC(X.slice(i),p=p,q=q);
+      result(i,0)=phi_pC(X.slice(i),p,q);
       
     }
     
@@ -351,7 +351,7 @@ arma::mat LA_LHDC(int n, int k, int m=100, int N=5000,
       
       for (int i=0;i<mnew;i++){
         
-        result(i,0)=phi_pC(X.slice(i),p=p,q=q);
+        result(i,0)=phi_pC(X.slice(i),p,q);
         
       }
       
@@ -570,7 +570,7 @@ arma::mat LA_OofAC(int n, int k, int m=100, int N=5000){
   
   for (int i=0;i<m;i++){
     
-    X.slice(i)=rOofAC(n=n,k=k);
+    X.slice(i)=rOofAC(n,k);
     
   }
   
