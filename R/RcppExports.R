@@ -85,8 +85,8 @@ GscoreC <- function(X, x) {
     .Call(`_LA_GscoreC`, X, x)
 }
 
-rSign <- function(m = 2L) {
-    .Call(`_LA_rSign`, m)
+rSign <- function(s = 2L) {
+    .Call(`_LA_rSign`, s)
 }
 
 G <- function(Y) {

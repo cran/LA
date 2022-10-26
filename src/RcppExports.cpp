@@ -265,13 +265,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // rSign
-double rSign(int m);
-RcppExport SEXP _LA_rSign(SEXP mSEXP) {
+double rSign(int s);
+RcppExport SEXP _LA_rSign(SEXP sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type m(mSEXP);
-    rcpp_result_gen = Rcpp::wrap(rSign(m));
+    Rcpp::traits::input_parameter< int >::type s(sSEXP);
+    rcpp_result_gen = Rcpp::wrap(rSign(s));
     return rcpp_result_gen;
 END_RCPP
 }

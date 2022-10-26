@@ -818,9 +818,9 @@ double GscoreC(arma::mat X, arma::vec x){
 }
 
 // [[Rcpp::export]]
-double rSign(int m=2){
+double rSign(int s=2){
   
-  arma::vec x(m);
+  arma::vec x(s);
   
   x(0,0)=-1.0;
   x(1,0)=1.0;

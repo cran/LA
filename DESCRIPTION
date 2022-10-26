@@ -1,10 +1,10 @@
 Package: LA
 Type: Package
 Title: Lioness Algorithm (LA)
-Version: 2.1
-Date: 2022-05-06
+Version: 2.2
+Date: 2022-10-25
 Authors@R: c(
-    person("Hongzhi", "Wang", email="hw34508@uga.edu", role=c("aut","cre")),
+    person("Hongzhi", "Wang", email="wanghongzhi.ut@gmail.com", role=c("aut","cre")),
     person("Qian", "Xiao", role="aut"),
     person("Abhyuday", "Mandal", role="aut"))
 Description: Contains Lioness Algorithm (LA) for finding optimal designs over continuous design space, optimal Latin hypercube designs, and optimal order-of-addition designs. LA is a brand new nature-inspired meta-heuristic optimization algorithm. Detailed methodologies of LA and its implementation on numerical simulations can be found at Hongzhi Wang, Qian Xiao and Abhyuday Mandal (2021) <arXiv:2010.09154>.
@@ -15,10 +15,10 @@ Imports: Rcpp
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-05-07 11:48:55 UTC; wangh
+Packaged: 2022-10-26 18:29:03 UTC; wangh
 Author: Hongzhi Wang [aut, cre],
   Qian Xiao [aut],
   Abhyuday Mandal [aut]
-Maintainer: Hongzhi Wang <hw34508@uga.edu>
+Maintainer: Hongzhi Wang <wanghongzhi.ut@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-05-11 15:30:07 UTC
+Date/Publication: 2022-10-26 22:17:56 UTC

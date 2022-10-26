@@ -7,7 +7,7 @@
 \alias{GscoreC}
 \alias{rSign}
 \alias{G}
-\title{Lioness Algorithm for experimental designs with continuous input}
+\title{Lioness Algorithm for experimental designs with continuous factors}
 \usage{
 LA_OptC(n, lb, ub, m = 100L, N = 5000L, OC = "D", alpha = 0.1)
 
@@ -17,28 +17,30 @@ A(X)
 
 GscoreC(X, x)
 
-rSign(m = 2L)
+rSign(s = 2L)
 
 G(Y)
 }
 \arguments{
-\item{n}{A positive integer, which stands for the number of rows (or run size) for a design.}
+\item{n}{A positive integer that stands for the number of rows (or run size) for a design.}
 
-\item{lb}{A vector contains the lower bounds of all the input variables. For example, if there are 3 input variables whose lower bounds are 0, 5, and 15, \code{lb} should be \code{lb=c(0,5,15)}.}
+\item{lb}{A vector contains the lower bounds of all the continuous factors. For example, if there are 3 factors whose lower bounds are 0, 5, and 15, \code{lb} should be \code{lb=c(0,5,15)}.}
 
-\item{ub}{A vector contains the upper bounds of all the input variables. For example, if there are 3 input variables whose upper bounds are 10, 15, and 25, \code{ub} should be \code{lb=c(10,15,25)}.}
+\item{ub}{A vector contains the upper bounds of all the continuous factors. For example, if there are 3 factors whose upper bounds are 10, 15, and 25, \code{ub} should be \code{lb=c(10,15,25)}.}
 
-\item{m}{A positive integer.}
+\item{m}{A positive integer that stands for the number of starting design candidates. The default is set to be 100.}
 
-\item{N}{A positive integer, which stands for the number of iterations. The default is set to be 5000. A large value of \code{N} will result a high CPU time.}
+\item{N}{A positive integer that stands for the maximum number of iterations. The default is set to be 5000. A larger value of \code{N} may result a high CPU time.}
 
-\item{OC}{An optimality criterion. The default setting is "D-optimality". It could be one of the following: "D", "A", and "G", which stands for "D-optimality", "A-optimality", and "G-optimality", respectively.}
+\item{OC}{An optimality criterion. The default setting is "D-optimality" under first-order simple/multiple linear regression model. It could be one of the following: "D", "A", and "G", which stands for "D-optimality", "A-optimality", and "G-optimality", respectively. Note that both "D-optimality" and "A-optimality" are under first-order simple/multiple linear regression model, while "G-optimality" is under second-order multiple linear regression model.}
 
 \item{alpha}{A tuning parameter in algorithm for controlling how big the change would be when updating elements in the step of avoiding local optimum. The default is set to be 0.1, which is the recommended value.}
 
 \item{X}{A matrix object. In general, \code{X} stands for the design matrix.}
 
-\item{x}{is a vector.}
+\item{x}{A vector.}
+
+\item{s}{A positive integer.}
 
 \item{Y}{A matrix object. In general, \code{Y} stands for the design matrix.}
 }
@@ -46,11 +48,11 @@ G(Y)
 If all inputs are logical, then the output will be either a \code{n} by \code{length(lb)} optimal design. Here, the \code{length(lb)} is assumed to be at least 2.
 }
 \description{
-\code{LA_OptC} returns optimal designs with continuous input
+\code{LA_OptC} returns optimal designs with continuous factors
 }
 \examples{
-#Assume in a simple linear regression model, we want to find a D-optimal
-#20-run design, where the input variable takes values between 0 and 24.
+#Assume in a simple linear regression model, we want to find a 20-run 
+#D-optimal design, where the input variable takes values between 0 and 24.
 #In theory, we know the optimal design is the following:
 #matrix(c(rep(1,20),rep(0,10),rep(24,10)),ncol=2,nrow=20,byrow=FALSE)
 
