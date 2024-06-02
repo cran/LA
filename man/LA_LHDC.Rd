@@ -59,9 +59,9 @@ exchangeC(X, j, type = "col")
 
 \item{X}{A matrix object. In general, \code{X} stands for a design matrix.}
 
-\item{i}{A positive integer, which stands for the i^{th} row of \code{X}.}
+\item{i}{A positive integer, which stands for the ith row of \code{X}.}
 
-\item{j}{A positive integer, which stands for the j^{th} column (or row) of \code{X}, and it should be within [1,ncol(X)] (or [1,nrow(X)]).}
+\item{j}{A positive integer, which stands for the jth column (or row) of \code{X}, and it should be within [1,ncol(X)] (or [1,nrow(X)]).}
 
 \item{y}{A vector.}
 

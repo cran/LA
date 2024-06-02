@@ -140,7 +140,7 @@ double MaxAbsCorC(arma::mat X){
   for (int i=0;i<k-1;i++){
     for (int j=i+1;j<k;j++){
       
-      if(abs(corC(X.col(i),X.col(j)))>maxcor){maxcor=abs(corC(X.col(i),X.col(j)));}
+      if(std::abs(corC(X.col(i),X.col(j)))>maxcor){maxcor=std::abs(corC(X.col(i),X.col(j)));}
       
     }
   }
@@ -161,7 +161,7 @@ double AvgAbsCorC(arma::mat X){
   for (int i=0;i<k-1;i++){
     for (int j=i+1;j<k;j++){
       
-      totalcor=totalcor+abs(corC(X.col(i),X.col(j)));
+      totalcor=totalcor+std::abs(corC(X.col(i),X.col(j)));
       
       C=C+1;
       

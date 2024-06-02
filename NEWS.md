@@ -1,6 +1,10 @@
+# LA 2.3
+
+* There was no big updates for the package functions. Updates were only made for the accommodation to new version of R.
+
 # LA 2.2
 
-* This were no big updates for the package functions. Updates were only made for the accommodation to new version of R.
+* There was no big updates for the package functions. Updates were only made for the accommodation to new version of R.
 
 # LA 2.1
 

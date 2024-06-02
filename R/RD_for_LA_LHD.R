@@ -57,8 +57,8 @@ rLHDC <- function(n, k) {
 #' @rdname LA_LHDC
 #' 
 #' @param X A matrix object. In general, \code{X} stands for the design matrix.
-#' @param i A positive integer, which stands for the i^{th} row of \code{X}.
-#' @param j A positive integer, which stands for the j^{th} row of \code{X}. Both \code{i} and \code{j} should be in [1,nrow(X)] and they should not be equal to each other.
+#' @param i A positive integer, which stands for the ith row of \code{X}.
+#' @param j A positive integer, which stands for the jth row of \code{X}. Both \code{i} and \code{j} should be in [1,nrow(X)] and they should not be equal to each other.
 #' @param q The default is set to be 1, and it could be either 1 or 2. If \code{q} is 1, the Manhattan (rectangular) distance will be used. If \code{q} is 2, the Euclidean distance will be used. 
 #' 
 dijC <- function(X, i, j, q = 1L) {
@@ -111,7 +111,7 @@ AvgAbsCorC <- function(X) {
 #' @rdname LA_LHDC
 #' 
 #' @param X A matrix object. In general, \code{X} stands for a design matrix.
-#' @param j A positive integer, which stands for the j^{th} column (or row) of \code{X}, and it should be within [1,ncol(X)] (or [1,nrow(X)]).
+#' @param j A positive integer, which stands for the jth column (or row) of \code{X}, and it should be within [1,ncol(X)] (or [1,nrow(X)]).
 #' @param type An exchange type. If \code{type} is "col" (the default setting), two random elements will be exchanged within column \code{j}. If \code{type} is "row", two random elements will be exchanged within row \code{j}.
 #' 
 exchangeC <- function(X, j, type = "col") {
